@@ -1,0 +1,22 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	<SelectDialog
+		id="mySelectDialog"
+		noDataText="No Countries Found"
+		title="Select Country"
+		search=".onChooseDialogSearch"
+		confirm=".onChooseDialogClose"
+		cancel=".onChooseDialogClose"
+		items="{
+			path: 'dataModel>/'
+		}">
+		<StandardListItem
+			title="{dataModel>name/official}"
+			description="{dataModel>name/common}"
+			icon="{dataModel>flags/svg}"
+			iconDensityAware="false"
+			iconInset="false"
+			type="Active" />
+	</SelectDialog>
+</core:FragmentDefinition>

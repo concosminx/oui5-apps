@@ -1,0 +1,110 @@
+<mvc:View controllerName="com.nimsoc.demo.controller.App" 
+xmlns="sap.m" 
+xmlns:mvc="sap.ui.core.mvc" 
+xmlns:core="sap.ui.core"
+xmlns:l="sap.ui.layout"
+xmlns:tnt="sap.tnt">
+	
+    <Input id="idSearchBox" value="{searchModel>/searchToken}" valueLiveUpdate="true"></Input>
+	<Button id="btnSearch" text="{i18n>get_rest_data}" press="handleButtonPress" />
+	
+	<Table id="idCountriesTable" inset="false" alternateRowColors="true" autoPopinMode="true" items="{
+			path: 'dataModel>/'
+		}">
+
+		<headerToolbar>
+			<OverflowToolbar>
+				<Title text="{i18n>countries}" level="H2" />
+				<ToolbarSpacer />
+				<Button tooltip="{i18n>sort}" icon="sap-icon://sort" press="handleSortButtonPressed" />
+				<ToolbarSpacer></ToolbarSpacer>
+				<Button icon="sap-icon://download" press="onDataExport" />
+			</OverflowToolbar>
+		</headerToolbar>
+
+		<!-- <infoToolbar>
+			<OverflowToolbar>
+				<Label text="Country REST API"/>
+			</OverflowToolbar>
+		</infoToolbar> -->
+
+		<columns>
+			<Column id="countryCol">
+				<Text text="{i18n>country}" />
+			</Column>
+			<Column width="24em" hAlign="End">
+				<Text text="{i18n>population}" />
+			</Column>
+			<Column width="24em">
+				<Text text="{i18n>lat_long}" />
+			</Column>
+			<Column width="12em">
+				<Text text="{i18n>flag}" />
+			</Column>
+			<Column width="12em">
+				<Text text="{i18n>languages}" />
+			</Column>
+			<Column width="12em">
+				<Text text="{i18n>action}" />
+			</Column>
+		</columns>
+		<items>
+			<ColumnListItem vAlign="Middle">
+				<cells>
+					<!-- <Text text="{dataModel>name/common} | {dataModel>name/official}" /> -->
+					<ObjectIdentifier title="{dataModel>name/official}" text="{dataModel>name/common}" />
+					<HBox fitContainer="true" justifyContent="End">
+						<Text text="{
+							path: 'dataModel>population',
+							type: 'sap.ui.model.type.Integer',
+							formatOptions: {
+								groupingEnabled: true
+							}
+					}" class="sapUiSmallMarginEnd" />
+
+						<tnt:InfoLabel text="{dataModel>timezones/0}" colorScheme="{= ${dataModel>population} > 5000000 ? 1 : 6}" />
+
+					</HBox>
+
+					<Text text="({dataModel>latlng/0}, {dataModel>latlng/1})" />
+					<Image src="{dataModel>flags/svg}" width="4em" height="3em" />
+					<Text text="{path: 'dataModel>languages',
+								 formatter: '.getLanguages' }" />
+					<Button text="Click me!" press="handleActionButtonPress">
+						<customData>
+							<core:CustomData key="target" value="{dataModel>capital}" />
+						</customData>
+					</Button>
+
+				</cells>
+			</ColumnListItem>
+		</items>
+	</Table>
+
+
+	<Panel width="auto" class="sapUiResponsiveMargin" accessibleRole="Region">
+		<headerToolbar>
+			<OverflowToolbar>
+				<Title text="{i18n>content_from_fragment}" />
+			</OverflowToolbar>
+		</headerToolbar>
+		<content>
+			<core:Fragment fragmentName="com.nimsoc.demo.view.Button" type="XML" />
+		</content>
+	</Panel>
+	
+	<Panel width="auto" class="sapUiResponsiveMargin" accessibleRole="Region">
+		<headerToolbar>
+			<OverflowToolbar>
+				<Title text="{i18n>event_bus}" />
+			</OverflowToolbar>
+		</headerToolbar>
+		<content>
+			<l:HorizontalLayout class="sapUiContentPadding">
+				<Button xmlns="sap.m" text="Event Bus Main" press="onShowPopup"></Button>
+				<mvc:XMLView viewName="com.nimsoc.demo.view.SubView1"></mvc:XMLView>
+				<mvc:XMLView viewName="com.nimsoc.demo.view.SubView2"></mvc:XMLView>
+			</l:HorizontalLayout>
+		</content>
+	</Panel>
+</mvc:View>

@@ -1,0 +1,6 @@
+{
+  "sap.app":{
+    "id":"sap.ui.demo.db",
+    "type":"application"
+  }
+}

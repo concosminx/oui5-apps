@@ -1,0 +1,8 @@
+<mvc:View controllerName="com.nimsoc.demo.controller.SubView1" xmlns:mvc="sap.ui.core.mvc" xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns="sap.m">
+	<Label text="Sub view 1"></Label>
+	<Button xmlns="sap.m"
+		text="Button SubView 1"
+		press="onButtonPress">
+	</Button>
+</mvc:View>

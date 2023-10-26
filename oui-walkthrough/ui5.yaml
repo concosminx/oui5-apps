@@ -1,0 +1,7 @@
+specVersion: '3.1'
+metadata:
+  name: oui5-walkthrough
+type: application
+framework:
+  name: OpenUI5
+  version: "1.118.0"

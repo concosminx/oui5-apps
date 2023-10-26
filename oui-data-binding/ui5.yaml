@@ -1,0 +1,7 @@
+specVersion: '3.0'
+metadata:
+  name: data-binding-tutorial
+type: application
+framework:
+  name: OpenUI5
+  version: "1.118.0"
