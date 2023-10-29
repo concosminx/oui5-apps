@@ -1,15 +1,14 @@
 sap.ui.define([
-	"sap/ui/core/mvc/Controller",
-	'sap/f/library'
-], function (Controller, fioriLibrary) {
+	"sap/ui/core/mvc/Controller"
+], function (Controller) {
 	"use strict";
 
 	return Controller.extend("sap.ui.demo.fiori2.controller.Detail", {
 		onInit: function () {
-			var oOwnerComponent = this.getOwnerComponent();
+			this.oOwnerComponent = this.getOwnerComponent();
 
-			this.oRouter = oOwnerComponent.getRouter();
-			this.oModel = oOwnerComponent.getModel();
+			this.oRouter = this.oOwnerComponent.getRouter();
+			this.oModel = this.oOwnerComponent.getModel();
 
 			this.oRouter.getRoute("list").attachPatternMatched(this._onProductMatched, this);
 			this.oRouter.getRoute("detail").attachPatternMatched(this._onProductMatched, this);
@@ -18,9 +17,17 @@ sap.ui.define([
 
 		onSupplierPress: function (oEvent) {
 			var supplierPath = oEvent.getSource().getBindingContext("products").getPath(),
-				supplier = supplierPath.split("/").slice(-1).pop();
+				supplier = supplierPath.split("/").slice(-1).pop(),
+				oNextUIState;
 
-			this.oRouter.navTo("detailDetail", {layout: fioriLibrary.LayoutType.ThreeColumnsMidExpanded, supplier: supplier, product: this._product});
+			this.oOwnerComponent.getHelper().then(function (oHelper) {
+				oNextUIState = oHelper.getNextUIState(2);
+				this.oRouter.navTo("detailDetail", {
+					layout: oNextUIState.layout,
+					supplier: supplier,
+					product: this._product
+				});
+			}.bind(this));
 		},
         
 		_onProductMatched: function (oEvent) {
@@ -36,6 +43,21 @@ sap.ui.define([
 				bCurrentShowFooterState = oObjectPage.getShowFooter();
 
 			oObjectPage.setShowFooter(!bCurrentShowFooterState);
+		},
+
+		handleFullScreen: function () {
+			var sNextLayout = this.oModel.getProperty("/actionButtonsInfo/midColumn/fullScreen");
+			this.oRouter.navTo("detail", {layout: sNextLayout, product: this._product});
+		},
+
+		handleExitFullScreen: function () {
+			var sNextLayout = this.oModel.getProperty("/actionButtonsInfo/midColumn/exitFullScreen");
+			this.oRouter.navTo("detail", {layout: sNextLayout, product: this._product});
+		},
+
+		handleClose: function () {
+			var sNextLayout = this.oModel.getProperty("/actionButtonsInfo/midColumn/closeColumn");
+			this.oRouter.navTo("list", {layout: sNextLayout});
 		},
 
 		onExit: function () {
