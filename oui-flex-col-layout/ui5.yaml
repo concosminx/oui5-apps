@@ -1,0 +1,7 @@
+specVersion: '3.0'
+metadata:
+  name: sap-f-tutorial-fiori2-01
+type: application
+framework:
+  name: OpenUI5
+  version: '1.119.0'
